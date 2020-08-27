@@ -1,23 +1,50 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
-import API from "../utils/API";
 import "./styles.css";
 
 class EmployeeCard extends Component {
     state = {
         employees: [{}],
         order: "descend",
-        results: []
+        results: [{}]
     };
 
-    headings = [
-       {name: "name"},
-       {name: "image"},
-       {name: "email"},
-       {name: "phone"} 
-    ]
 
-  handleOrder () {
+   Table = ({ headings, employees, handleOrder }) => {
+    return (
+        <div className="datatable mt-5">
+          <table
+            id="table"
+            className="table table-striped table-hover table-condensed"
+          >
+            <thead>
+              <tr>
+                {headings.map(({ name, width }) => {
+                  return (
+                    <th
+                      className="col"
+                      key={name}
+                      style={{ width }}
+                      onClick={() => {
+                        handleOrder(name.toLowerCase());
+                      }}
+                    >
+                      {name}
+                      <span className="pointer"></span>
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+    
+            <EmployeeCard employees={employees} />
+          </table>
+        </div>
+      );
+   }
+
+
+  handleOrder = heading => {
         if(this.setState === "descend") {
             this.setState ({
                 order: "ascend"
@@ -28,21 +55,6 @@ class EmployeeCard extends Component {
             })
         }
     }
-
-
-    componentDidMount () {
-        API.getEmployees().then(results => {
-            this.setState({
-                employees: results.data.results,
-                filterResults: results.data.results
-            });
-        });
-    }
-
-    // handleSearch = event => {
-
-    //     const filterResults = this.state.employees.filter(this.setState ({ filterResults}));
-    // }
 
     render (){
         return (

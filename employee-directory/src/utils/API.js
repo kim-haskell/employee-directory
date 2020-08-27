@@ -1,9 +1,9 @@
 import axios from "axios";
-const BASEURL = "https://www.randomapi.com/?t=";
-const APIKEY = "&apikey=PG8I-ZGN2-DDVL-FM0Z";
+const BASEURL = "https://www.randomapi.me/api/?results=50&nat=us";
+
 
 export default {
-    search: function(query) {
-        return axios.get(BASEURL + query + APIKEY);
+    search: function() {
+        return axios.get(BASEURL);
     }
 };
